@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: BSL-1.0
 
+cmake_minimum_required(VERSION 3.15)
+
 add_library(mc_compiler_warnings INTERFACE)
 add_library(mc::compiler_warnings ALIAS mc_compiler_warnings)
 
@@ -12,26 +14,32 @@ else ()
     target_compile_options(mc_compiler_warnings
         INTERFACE
             -Wall
-            -Wcast-align
             -Wextra
-            -Wnarrowing
-            -Woverloaded-virtual
             -Wpedantic
+
+            -Wcast-align
+            -Wconversion
+            -Woverloaded-virtual
             -Wreorder
             -Wshadow
             -Wsign-compare
-            -Wno-sign-conversion
+            -Wsign-conversion
             -Wstrict-aliasing
             -Wswitch-enum
             -Wuninitialized
             -Wunreachable-code
             -Wunused-parameter
             -Wzero-as-null-pointer-constant
+            -Wredundant-decls
+
+            $<$<CXX_COMPILER_ID:GNU>:
+                -Wlogical-op
+            >
+
             $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
                 -Wbool-conversion
                 -Wconditional-uninitialized
                 -Wconstant-conversion
-                # -Wconversion
                 -Wextra-semi
                 -Winconsistent-missing-destructor-override
                 -Wint-conversion
@@ -41,16 +49,10 @@ else ()
                 -Wshorten-64-to-32
                 -Wunused-private-field
             >
+
             $<$<CXX_COMPILER_ID:AppleClang>:
-                -Wno-poison-system-directories
             >
-            $<$<CXX_COMPILER_ID:GNU>:
-                # -Wlogical-op
-                -Wno-maybe-uninitialized
-                -Wredundant-decls
-                -Wno-free-nonheap-object
-                $<$<VERSION_GREATER:CXX_COMPILER_VERSION,"11.0.0">:-Wno-free-nonheap-object>
-            >
+
     )
     if (MODERNCIRCUITS_ENABLE_WERROR)
         target_compile_options(mc_compiler_warnings INTERFACE -Werror)

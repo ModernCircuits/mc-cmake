@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: BSL-1.0
 
+cmake_minimum_required(VERSION 3.15)
+
 add_library(mc_compiler_options INTERFACE)
 add_library(mc::compiler_options ALIAS mc_compiler_options)
 

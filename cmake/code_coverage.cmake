@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: BSL-1.0
 
-# Code Coverage Configuration
+cmake_minimum_required(VERSION 3.15)
+
 add_library(mc_coverage INTERFACE)
 add_library(mc::coverage ALIAS mc_coverage)
 
