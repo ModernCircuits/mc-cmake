@@ -34,6 +34,7 @@ else ()
 
             $<$<CXX_COMPILER_ID:GNU>:
                 -Wlogical-op
+                -Wno-maybe-uninitialized # Triggers warnings in boost and JUCE
             >
 
             $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
